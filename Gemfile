@@ -19,13 +19,15 @@ gem 'omniauth-salesloft'
 gem 'omniauth'
 gem 'foreman'
 gem 'rake'
-gem 'dotenv-rails'
+
+gem 'rest-client'
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'capybara', '~> 2.13'
   gem 'selenium-webdriver'
   gem 'pry-rails'
+  gem 'dotenv-rails'
 end
 
 group :development do
