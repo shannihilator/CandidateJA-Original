@@ -4,6 +4,10 @@ class MainController < ApplicationController
     require 'net/http'
     require 'json'
 
+    @first_name = Array.new
+    @email_address = Array.new
+    @title = Array.new
+
     url = URI("https://api.salesloft.com/v2/people.json")
 
     http = Net::HTTP.new(url.host, url.port)
@@ -15,6 +19,14 @@ class MainController < ApplicationController
 
 
     response = http.request(request)
-    @body = response.read_body
+    
+    @body = JSON.parse(response.body)['data']
+    @body.each do |body|
+      @first_name << body['first_name']
+      @email_address << body['email_address']
+      @title << body['title']
+
+    end
+
   end
 end
