@@ -1,16 +1,23 @@
+<%= stylesheet_link_tag "application.css" %>
+
 <div id="root">
 
 <h1> SalesLoft: Level 1 </h1>
 
-    <% @first_name.zip(@email_address, @title).each do |name, email, title| %>
-        
-        <div id="grouping">
-            Name: <%= name %> 
-            E-mail: <%= email %> 
-            Title: <%= title %> 
-        </div>
-
-    <% end %>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Job Title</th>
+        </tr>
+        <% @first_name.zip($email_address, @title).each do |name, email, title| %>
+        <tr>
+            <td><%= name %></td>
+            <td style="padding: 0px 30px 0px 30px;"><%= email %></td>
+            <td><%= title %></td>
+        </tr>
+        <% end %>
+    </table>
 
 <h1> SalesLoft: Level 2 </h1>
 
@@ -22,12 +29,12 @@
             </tr>
         <% @frequency.each do |k, v| %>
             <tr>
-                <th><%= k %></th>
-                <th><%= v %></th>
+                <td><%= k %></td>
+                <td><%= v %></td>
             </tr>
         <% end %>
     </div>
 
-
+    <%= link_to 'Call Action', main_display_path, method: :post %>
 
 </div>
