@@ -1,36 +1,34 @@
 class MainController < ApplicationController
+
   def index
 
      #LEVEL 1
     
     # Initialize variables to be arrays
     @first_name = Array.new
-    $email_address = Array.new
+    @email_address = Array.new
     @title = Array.new
 
     # Gets body of API call and initializes first name, email, and job title
-    set(@first_name, $email_address, @title)
-   
-
-    #LEVEL 2
-    
-    #Iterate over each character and put them in to the hash
-    $email_address.each do |email|
-      email = email.split('')
-      email.each do |e|
-        @frequency[e] += 1
-      end
-    end
-
-    #Sort in descending order
-    @frequency = @frequency.sort_by {|_key, value| value}.reverse
+    call(@first_name, @email_address, @title)
  
   end
 
-  def display
+  def displayFreq
     
+    #Define a hash for the frequencies
+    @frequency = Hash.new(0)
 
-    $email_address.each do |email|
+    # Initialize variables to be arrays
+    @first_name = Array.new
+    @email_address = Array.new
+    @title = Array.new
+
+    # Gets body of API call and initializes first name, email, and job title
+    call(@first_name, @email_address, @title)
+
+    #Iterate over each character and put them in to the hash
+    @email_address.each do |email|
       email = email.split('')
       email.each do |e|
         @frequency[e] += 1
@@ -43,7 +41,7 @@ class MainController < ApplicationController
 
 
   # Makes call to SalesLoft API
-  def call
+  def salesApi
     require 'uri'
     require 'net/http'
     require 'json'
@@ -68,10 +66,10 @@ class MainController < ApplicationController
 
 
   # Funciton to initialize variables
-  def set(first_name, email_address, title)
+  def call(first_name, email_address, title)
 
     # Call SalesLoft API and get the body of the response
-    @body = call()
+    @body = salesApi()
 
     # Funnel JSON into appropiate variable
     @body.each do |body|
@@ -80,6 +78,5 @@ class MainController < ApplicationController
       title << body['title']
     end
   end
-
 
 end
