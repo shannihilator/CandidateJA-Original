@@ -1,13 +1,58 @@
 class MainController < ApplicationController
   def index
+
+     #LEVEL 1
+    
+    # Initialize variables to be arrays
+    @first_name = Array.new
+    @email_address = Array.new
+    @title = Array.new
+
+    # Gets body of API call and initializes first name, email, and job title
+    set(@first_name, @email_address, @title)
+   
+
+    #LEVEL 2
+    
+    #Iterate over each character and put them in to the hash
+    # @email_address.each do |email|
+    #   email = email.split('')
+    #   email.each do |e|
+    #     @frequency[e] += 1
+    #   end
+    # end
+
+    #Sort in descending order
+    # @frequency = @frequency.sort_by {|_key, value| value}.reverse
+ 
+  end
+
+  def display
+    @body = call()
+    @body.each do |body|
+      @email_address << body['email_address']
+    end
+
+    @email_address.each do |email|
+      email = email.split('')
+      email.each do |e|
+        @frequency[e] += 1
+      end
+    end
+
+    #Sort in descending order
+    @frequency = @frequency.sort_by {|_key, value| value}.reverse
+  end
+
+
+  # Makes call to SalesLoft API
+  def call
     require 'uri'
     require 'net/http'
     require 'json'
 
     #Arrays for each category
-    @first_name = Array.new
-    @email_address = Array.new
-    @title = Array.new
+    
     @frequency = Hash.new(0)
 
     url = URI("https://api.salesloft.com/v2/people.json")
@@ -21,28 +66,21 @@ class MainController < ApplicationController
     response = http.request(request)
     
     @body = JSON.parse(response.body)['data']
-
-    #LEVEL 1
-
-    #Grabs first name, email, and job title from each available Person
-    @body.each do |body|
-      @first_name << body['first_name']
-      @email_address << body['email_address']
-      @title << body['title']
-    end
-
-    #LEVEL 2
-    @test = "jimmy_mcmahon@salesloft.com"
-    #Iterate over each character and put them in to the hash
-    @email_address.each do |email|
-      email = email.split('')
-      email.each do |e|
-        @frequency[e] += 1
-      end
-    end
-
-    #Sort in descending order
-    @frequency = @frequency.sort_by {|_key, value| value}.reverse
-
+    return @body
   end
+
+  def set(first_name, email_address, title)
+
+    # Call SalesLoft API and get the body of the response
+    @body = call()
+
+    # Funnel JSON into appropiate variable
+    @body.each do |body|
+      first_name << body['first_name']
+      email_address << body['email_address']
+      title << body['title']
+    end
+  end
+
+
 end
