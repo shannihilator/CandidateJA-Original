@@ -5,35 +5,32 @@ class MainController < ApplicationController
     
     # Initialize variables to be arrays
     @first_name = Array.new
-    @email_address = Array.new
+    $email_address = Array.new
     @title = Array.new
 
     # Gets body of API call and initializes first name, email, and job title
-    set(@first_name, @email_address, @title)
+    set(@first_name, $email_address, @title)
    
 
     #LEVEL 2
     
     #Iterate over each character and put them in to the hash
-    # @email_address.each do |email|
-    #   email = email.split('')
-    #   email.each do |e|
-    #     @frequency[e] += 1
-    #   end
-    # end
+    $email_address.each do |email|
+      email = email.split('')
+      email.each do |e|
+        @frequency[e] += 1
+      end
+    end
 
     #Sort in descending order
-    # @frequency = @frequency.sort_by {|_key, value| value}.reverse
+    @frequency = @frequency.sort_by {|_key, value| value}.reverse
  
   end
 
   def display
-    @body = call()
-    @body.each do |body|
-      @email_address << body['email_address']
-    end
+    
 
-    @email_address.each do |email|
+    $email_address.each do |email|
       email = email.split('')
       email.each do |e|
         @frequency[e] += 1
@@ -69,6 +66,8 @@ class MainController < ApplicationController
     return @body
   end
 
+
+  # Funciton to initialize variables
   def set(first_name, email_address, title)
 
     # Call SalesLoft API and get the body of the response
