@@ -21,20 +21,6 @@
 
 <h1> SalesLoft: Level 2 </h1>
 
-    <div>
-        <table>
-            <tr>
-                <th>Character</th>
-                <th>Count</th>
-            </tr>
-        <% @frequency.each do |k, v| %>
-            <tr>
-                <td><%= k %></td>
-                <td><%= v %></td>
-            </tr>
-        <% end %>
-    </div>
-
-    <%= link_to 'Call Action', main_display_path, method: :post %>
+    <%= button_to 'Display Frequencies', main_displayFreq_path, method: :get %>
 
 </div>
