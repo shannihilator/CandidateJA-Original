@@ -43,19 +43,46 @@ class MainController < ApplicationController
     index()
 
     #all data combined
-    @render = Array.new
-    @dups = @first_name.group_by{ |e| e }.select { |k, v| v.size > 1 }.map(&:first)
-    @data = @first_name.zip(@email_address)
-    @data.each do |data|
-      @render << data[1]
-    end
-    render plain: @render
-  end
+    @emails = Array.new
+    @duplicates = Array.new
 
-    # if data.include? @dups then
-    #     render plain: data[1]
-    #   end
-    # end
+    # Find duplicated names
+    @dupNames = @first_name.group_by{ |e| e }.select { |k, v| v.size > 1 }.map(&:first)
+
+    # Group first names with email
+    @data = @first_name.zip(@email_address)
+    
+    # Grab the emails of each duplicated name
+    @data.each do |data|
+      @dupNames.each do |dupNames|
+        if data.include? dupNames then
+          @emails << data[1]
+        end
+      end
+    end
+    
+
+    # Iterates through all emails and checks for duplicates by slicing
+    # similar chars from each email
+    @emails.each do |a|
+      @emails.each do |b|
+        tmp = a
+        if tmp != b then
+          tmp.slice! b
+        end
+
+        # If the email addresses are off by two characters, this triggers
+        # a duplicate
+        if tmp.length <= 2 then
+          @duplicates << a
+          break
+        end
+      end
+    end
+
+    render plain: @duplicates
+
+  end
 
 
   #Helper Funcitons
