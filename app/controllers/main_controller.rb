@@ -1,8 +1,7 @@
 class MainController < ApplicationController
 
+  # Level 1
   def index
-
-     #LEVEL 1
     
     # Initialize variables to be arrays
     @first_name = Array.new
@@ -14,6 +13,7 @@ class MainController < ApplicationController
  
   end
 
+  # Level 2
   def displayFreq
     
     #Define a hash for the frequencies
@@ -40,6 +40,45 @@ class MainController < ApplicationController
   end
 
 
+  # Level 3
+
+  def displayDup
+
+    # Initialize variables to be arrays
+    @first_name = Array.new
+    @email_address = Array.new
+    @title = Array.new
+
+    # Gets body of API call and initializes first name, email, and job title
+    call(@first_name, @email_address, @title)
+
+    #all data combined
+    
+    @dups = @first_name.group_by{ |e| e }.select { |k, v| v.size > 1 }.map(&:first)
+    @data = @first_name.zip(@email_address, @title)
+    @data.each 
+
+  end
+
+
+
+  #Helper Funcitons
+
+  # Funciton to initialize variables
+  def call(first_name, email_address, title)
+
+    # Call SalesLoft API and get the body of the response
+    @body = salesApi()
+
+    # Funnel JSON into appropiate variable
+    @body.each do |body|
+      first_name << body['first_name']
+      email_address << body['email_address']
+      title << body['title']
+    end
+  end
+  
+
   # Makes call to SalesLoft API
   def salesApi
     require 'uri'
@@ -65,18 +104,6 @@ class MainController < ApplicationController
   end
 
 
-  # Funciton to initialize variables
-  def call(first_name, email_address, title)
-
-    # Call SalesLoft API and get the body of the response
-    @body = salesApi()
-
-    # Funnel JSON into appropiate variable
-    @body.each do |body|
-      first_name << body['first_name']
-      email_address << body['email_address']
-      title << body['title']
-    end
-  end
+  
 
 end
