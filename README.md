@@ -6,7 +6,7 @@ Go to localhost:3000
 
 ###Troubleshooting
 
-If you come accross an error asking to run bin/rails db:migrate run this:
+If you come accross an error asking to run bin/rails db:migrate, run this:
 
 rm -f db/*.sqlite3
 rake db:create
