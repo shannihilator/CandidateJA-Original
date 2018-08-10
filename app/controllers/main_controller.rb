@@ -19,13 +19,8 @@ class MainController < ApplicationController
     #Define a hash for the frequencies
     @frequency = Hash.new(0)
 
-    # Initialize variables to be arrays
-    @first_name = Array.new
-    @email_address = Array.new
-    @title = Array.new
-
-    # Gets body of API call and initializes first name, email, and job title
-    call(@first_name, @email_address, @title)
+    # Initialize everything
+    index()
 
     #Iterate over each character and put them in to the hash
     @email_address.each do |email|
@@ -43,27 +38,24 @@ class MainController < ApplicationController
   # Level 3
 
   def displayDup
-
-    # Initialize variables to be arrays
-    @first_name = Array.new
-    @email_address = Array.new
-    @title = Array.new
-
-    # Gets body of API call and initializes first name, email, and job title
-    call(@first_name, @email_address, @title)
+    
+    #Initialize everything
+    index()
 
     #all data combined
-    
+    @render = Array.new
     @dups = @first_name.group_by{ |e| e }.select { |k, v| v.size > 1 }.map(&:first)
-    @data = @first_name.zip(@email_address, @title)
+    @data = @first_name.zip(@email_address)
     @data.each do |data|
-      if data[0].include? @dups then
-        render plain: data[1]
-      end
+      @render << data[1]
     end
-
+    render plain: @render
   end
 
+    # if data.include? @dups then
+    #     render plain: data[1]
+    #   end
+    # end
 
 
   #Helper Funcitons
