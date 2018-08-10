@@ -56,7 +56,11 @@ class MainController < ApplicationController
     
     @dups = @first_name.group_by{ |e| e }.select { |k, v| v.size > 1 }.map(&:first)
     @data = @first_name.zip(@email_address, @title)
-    @data.each 
+    @data.each do |data|
+      if data[0].include? @dups then
+        render plain: data[1]
+      end
+    end
 
   end
 
