@@ -80,8 +80,6 @@ class MainController < ApplicationController
       end
     end
 
-    render plain: @duplicates
-
   end
 
 
