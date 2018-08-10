@@ -1,48 +1,25 @@
-# SalesLoft Development Interview Starter Kit
+Though this project relies heavily on the starter kit, it should not be run natively
 
-This application is a jumping off point for the SalesLoft Development Interview,
-its designed to cut out boilerplate so you can get straight to coding.
+In order to run, please use bin/rails server
 
-Included in the package.
+Go to localhost:3000
 
-- Rails 5 Application
-- Webpack Front-end build system
-- React
-- Redux
+###Troubleshooting
 
-## Getting Started
+If you come accross an error asking to run bin/rails db:migrate run this:
 
-### Running natively
+rm -f db/*.sqlite3
+rake db:create
+RAILS_ENV=development rake db:migrate
+rails s -e development
 
-1.) Make sure your ruby environment is at least 2.4.1
-```
-ruby --version
-```
-2.) Make sure your node version is above 8.5.0
-```
-node --version
-```
-3.) bundle install
-```
-gem install bundle
-bundle install
-```
-4.) npm install
-```
-npm install
-npm install webpack-dev-server -g
-```
-5.) Create and migrate Sqlite Databases
-```
-bundle exec rake db:create && bundle exec rake db:migrate
-```
-6.) Copy the .env.sample to .env and fill out the values
-```
-cp .env.sample .env
-```
-7.) Start the development server
-```
-bundle exec foreman start
-```
-8.) Navigate to localhost:5000
 
+Be sure to add .env to this project
+
+/.env:
+
+SALESLOFT_APPLICATION_ID=changeme
+SALESLOFT_APPLICATION_SECRET=changeme
+API_PORT=5000
+WEBPACK_PORT=5001
+API_KEY=INSERT_KEY_HERE
