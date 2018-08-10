@@ -1,8 +1,9 @@
-<%= stylesheet_link_tag "application.css" %>
 
 <div id="root">
 
-<h1> SalesLoft: Level 1 </h1>
+<h1>SalesLoft Offline Coding Evaluation</h1>
+
+<h2> SalesLoft: Level 1 </h2>
 
     <table>
         <tr>
@@ -10,7 +11,7 @@
             <th>Email</th>
             <th>Job Title</th>
         </tr>
-        <% @first_name.zip($email_address, @title).each do |name, email, title| %>
+        <% @first_name.zip(@email_address, @title).each do |name, email, title| %>
         <tr>
             <td><%= name %></td>
             <td style="padding: 0px 30px 0px 30px;"><%= email %></td>
@@ -19,8 +20,12 @@
         <% end %>
     </table>
 
-<h1> SalesLoft: Level 2 </h1>
+<h2> SalesLoft: Level 2 </h2>
 
     <%= button_to 'Display Frequencies', main_displayFreq_path, method: :get %>
+
+<h2> SalesLoft: Level 3 </h2>
+
+    <%= button_to 'Display Duplicates', main_displayDup_path, method: :get %>
 
 </div>
